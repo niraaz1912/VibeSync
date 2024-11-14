@@ -1,4 +1,5 @@
 import spotipy
+import random
 from spotipy.oauth2 import SpotifyClientCredentials
 
 client_id = 'd613b327a8904cc488bc4c19f37561b4'
@@ -16,20 +17,32 @@ emotion_to_features = {
     "surprise": {"energy": (0.6, 1.0), "valence": (0.4, 0.6), "tempo": (130, 200)}
 }
 
+all_genres = ["acoustic", "afrobeat", "alt-rock", "alternative", "ambient", "anime", "black-metal", "bluegrass", "blues", "bossanova", "brazil", "breakbeat", "british", "cantopop", "chicago-house", "children", "chill", "classical", "club", "comedy", "country", "dance", "dancehall", "death-metal", "deep-house", "detroit-techno", "disco", "disney", "drum-and-bass", "dub", "dubstep", "edm", "electro", "electronic", "emo", "folk", "forro", "french", "funk", "garage", "german", "gospel", "goth", "grindcore", "groove", "grunge", "guitar", "happy", "hard-rock", "hardcore", "hardstyle", "heavy-metal", "hip-hop", "holidays", "honky-tonk", "house", "idm", "indian", "indie", "indie-pop", "industrial", "iranian", "j-dance", "j-idol", "j-pop", "j-rock", "jazz", "k-pop", "kids", "latin", "latino", "malay", "mandopop", "metal", "metal-misc", "metalcore", "minimal-techno", "movies", "mpb", "new-age", "new-release", "opera", "pagode", "party", "philippines-opm", "piano", "pop", "pop-film", "post-dubstep", "power-pop", "progressive-house", "psych-rock", "punk", "punk-rock", "r-n-b", "rainy-day", "reggae", "reggaeton", "road-trip", "rock", "rock-n-roll", "rockabilly", "romance", "sad", "salsa", "samba", "sertanejo", "show-tunes", "singer-songwriter", "ska", "sleep", "songwriter", "soul", "soundtracks", "spanish", "study", "summer", "swedish", "synth-pop", "tango", "techno", "trance", "trip-hop", "turkish", "work-out", "world-music"]
+    
+    # Function to randomly select genres (no emotion mapping)
+def random_genres(num_genres=5):
+    # Randomly select 'num_genres' genres from the list of all genres
+    selected_genres = random.sample(all_genres, num_genres)
+    return selected_genres
+
 def get_recommendations(emotion):
     features = emotion_to_features.get(emotion.lower())
     if not features:
         print("Emotion not recognized.")
         return []
     
-    #print(features)
+    
 
+    selected_genres = random_genres(5)
+    
+    # Print out the selected genres
+    #print(f"Selected genres: {selected_genres}")
     # Map the feature ranges to Spotify API parameters
     params = {
         "limit": 10, # 10 songs
         #"seed_genres": ["pop", "rock", "electronic", "country", "classical", "jazz", "metal", "folk", "latin", "punk", "indie", "lo-fi", "chill" ,"mood", "focus"]  # Change as preferred
-        "seed_genres": ["pop", "rock", "electronic", "afrobeat"]
-    }
+        "seed_genres": selected_genres
+        }
 
     # Add audio feature filters based on emotion
     for feature, (min_val, max_val) in features.items():
