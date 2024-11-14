@@ -90,14 +90,14 @@ def get_recommendations(emotion):
     selected_genres = random_genres(3)
 
     # Debugging: Print the retrieved data
-    print(f"Top Artists: {top_artists}")
-    print(f"Top Tracks: {top_tracks}")
-    print(f"Recent Tracks: {recent_tracks}")
-    print(f"Selected Genres: {selected_genres}")
+   # print(f"Top Artists: {top_artists}")
+    #print(f"Top Tracks: {top_tracks}")
+    #print(f"Recent Tracks: {recent_tracks}")
+    #print(f"Selected Genres: {selected_genres}")
 
     # Ensure at least one artist, track, and genre is available
     if not top_artists or not top_tracks or not selected_genres:
-        print("Error: Insufficient data for recommendation.")
+        print("Insufficient data in user's account. Only emotion will used to recommend songs.")
         return []
 
     # Convert top artists and top tracks to proper URIs for Spotify
@@ -131,7 +131,60 @@ def get_recommendations(emotion):
     for track in recommendations['tracks']:
         track_info = f"{track['name']} by {track['artists'][0]['name']}"
         tracks.append(track_info)
+        
 
     return tracks
 
+def get_recommendations_genre(emotion):
+    # Validate emotion input
+    features = EMOTION_TO_FEATURES.get(emotion.lower())
+    if not features:
+        print(f"Emotion '{emotion}' not recognized.")
+        return []
+
+    selected_genres = random_genres(5)
+    print(f"Selected Genres: {selected_genres}")
+
+    # Ensure at least one artist, track, and genre is available
+    if not selected_genres:
+        print("Error: Insufficient data for recommendation.")
+        return []
+
+    # Configure recommendation parameters with user data
+    params = {
+        "seed_genres": selected_genres,
+        "limit": 10
+    }
+
+    
+    # Add audio feature filters based on the user's emotion
+    for feature, (min_val, max_val) in features.items():
+        params[f"min_{feature}"] = min_val
+        params[f"max_{feature}"] = max_val
+
+    # Fetch recommendations
+    try:
+        recommendations = sp.recommendations(**params)
+    except Exception as e:
+        print(f"Error fetching recommendations: {e}")
+        return []
+
+    # Return track names and artists
+    tracks = []
+    for track in recommendations['tracks']:
+        track_info = f"{track['name']} by {track['artists'][0]['name']}"
+        tracks.append(track_info)
+        
+
+    return tracks
+
+def recommend(emotion):
+    tracks = get_recommendations(emotion)
+    new_tracks = []
+     
+    if (len(tracks)<10):
+        new_tracks = get_recommendations_genre(emotion)
+        
+    tracks.extend(new_tracks)
+    return tracks
 

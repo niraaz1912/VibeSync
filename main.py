@@ -1,11 +1,11 @@
 from emotion_analyzer import predict_emotion
-from user_identificaiton import get_recommendations
+from user_identificaiton import recommend
 
-text = "I want to listen to AC/DC song"
+text = "I am the happiest guy in the world."
 
 emotion = predict_emotion(text)
 print(emotion)
-tracks = get_recommendations(emotion)
+tracks = recommend(emotion)
 
 for track in tracks:
     print(track)
