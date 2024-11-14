@@ -48,7 +48,7 @@ def classify_emotion(model, inputs):
     predicted_class_id = torch.argmax(logits, dim=1).item()  # Get the index of the highest logit value
     
     # Emotion labels based on model's training
-    emotion_labels = ["joy", "anger", "fear", "sadness", "surprise", "disgust"]  # Adjust according to model's training
+    emotion_labels = ["anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise"]  # Adjust according to model's training
     predicted_emotion = emotion_labels[predicted_class_id]  # Get the emotion corresponding to the predicted class ID
     
     return predicted_emotion
@@ -71,6 +71,6 @@ def predict_emotion(text: str, model_name: str = "j-hartmann/emotion-english-dis
     return predicted_emotion
 
 
-text = "I'm so not happy today!"
+text = "I'm feeling excited today"
 predicted_emotion = predict_emotion(text)
 print(f"Predicted emotion: {predicted_emotion}")
