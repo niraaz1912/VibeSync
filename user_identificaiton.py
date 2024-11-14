@@ -7,13 +7,14 @@ CLIENT_ID = 'd613b327a8904cc488bc4c19f37561b4'
 CLIENT_SECRET = '65f3190ade91427aa4b28f800daf7000'
 REDIRECT_URI = 'http://127.0.0.1:5500/'
 
-# Set up OAuth2 with required scopes
-sp = Spotify(auth_manager=SpotifyOAuth(
-        client_id=CLIENT_ID,
-        client_secret=CLIENT_SECRET,
-        redirect_uri=REDIRECT_URI,
-        scope="user-top-read user-read-recently-played user-library-read"
-    ))
+# Scopes for the app (these will allow us to access the user's recent tracks)
+scope = "user-library-read user-top-read user-read-recently-played playlist-read-private"
+
+# Initialize Spotify client with OAuth manager
+sp = Spotify(auth_manager=SpotifyOAuth(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, redirect_uri=REDIRECT_URI, scope=scope))
+
+# Prompt the user to log in and authenticate (this will open a browser window)
+print("Please log in to Spotify...")
 
 # Emotion-to-features mapping
 EMOTION_TO_FEATURES = {
@@ -88,14 +89,31 @@ def get_recommendations(emotion):
     recent_tracks = get_recently_played_tracks(sp)
     selected_genres = random_genres(5)
 
+    # Debugging: Print the retrieved data
+    print(f"Top Artists: {top_artists}")
+    print(f"Top Tracks: {top_tracks}")
+    print(f"Recent Tracks: {recent_tracks}")
+    print(f"Selected Genres: {selected_genres}")
+
+    # Ensure at least one artist, track, and genre is available
+    if not top_artists or not top_tracks or not selected_genres:
+        print("Error: Insufficient data for recommendation.")
+        return []
+
+    # Convert top artists and top tracks to proper URIs for Spotify
+    top_artists_uris = [f"spotify:artist:{artist}" for artist in top_artists[:2]]
+    top_tracks_uris = [f"spotify:track:{track}" for track in top_tracks[:2]] if top_tracks else [f"spotify:track:{track}" for track in recent_tracks[:2]]
+
+
     # Configure recommendation parameters with user data
     params = {
         "limit": 10,
-        "seed_artists": top_artists[:2],  # Include a couple of top artists
-        "seed_tracks": top_tracks[:2] if top_tracks else recent_tracks[:2],  # Fallback to recent tracks if no top tracks
+        "seed_artists": top_artists_uris,  # Using URIs instead of just IDs
+        "seed_tracks": top_tracks_uris,  # Using URIs instead of just IDs
         "seed_genres": selected_genres
     }
 
+    
     # Add audio feature filters based on the user's emotion
     for feature, (min_val, max_val) in features.items():
         params[f"min_{feature}"] = min_val
