@@ -1,7 +1,7 @@
 from emotion_analyzer import predict_emotion
 from user_identificaiton import get_recommendations
 
-text = "The news about the sudden passing of my childhood friend hit me like a wave, and I can hardly process how to cope with this deep sense of loss and grief."
+text = "I want to listen to AC/DC song"
 
 emotion = predict_emotion(text)
 print(emotion)

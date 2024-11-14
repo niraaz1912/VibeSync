@@ -72,7 +72,7 @@ def get_recently_played_tracks(sp, limit=5):
         return []
 
 # Function to randomly select genres
-def random_genres(num_genres=5):
+def random_genres(num_genres):
     return random.sample(ALL_GENRES, num_genres)
 
 # Main function to get personalized recommendations based on emotion
@@ -87,7 +87,7 @@ def get_recommendations(emotion):
     top_artists = get_user_top_artists(sp)
     top_tracks = get_user_top_tracks(sp)
     recent_tracks = get_recently_played_tracks(sp)
-    selected_genres = random_genres(5)
+    selected_genres = random_genres(3)
 
     # Debugging: Print the retrieved data
     print(f"Top Artists: {top_artists}")
@@ -101,16 +101,16 @@ def get_recommendations(emotion):
         return []
 
     # Convert top artists and top tracks to proper URIs for Spotify
-    top_artists_uris = [f"spotify:artist:{artist}" for artist in top_artists[:2]]
+    top_artists_uris = [f"spotify:artist:{artist}" for artist in top_artists[:3]]
     top_tracks_uris = [f"spotify:track:{track}" for track in top_tracks[:2]] if top_tracks else [f"spotify:track:{track}" for track in recent_tracks[:2]]
 
 
     # Configure recommendation parameters with user data
     params = {
-        "limit": 10,
         "seed_artists": top_artists_uris,  # Using URIs instead of just IDs
+        #"seed_genres": selected_genres,
         "seed_tracks": top_tracks_uris,  # Using URIs instead of just IDs
-        "seed_genres": selected_genres
+        "limit": 10
     }
 
     

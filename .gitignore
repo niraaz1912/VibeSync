@@ -1,3 +1,5 @@
 .venv/
 requirements.txt
 playlist.js
+.cache
+_pycache_/
