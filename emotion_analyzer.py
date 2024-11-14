@@ -71,6 +71,6 @@ def predict_emotion(text: str, model_name: str = "j-hartmann/emotion-english-dis
     return predicted_emotion
 
 
-text = "I'm feeling excited today"
-predicted_emotion = predict_emotion(text)
-print(f"Predicted emotion: {predicted_emotion}")
+#text = ""
+#predicted_emotion = predict_emotion(text)
+#print(f"Predicted emotion: {predicted_emotion}")
