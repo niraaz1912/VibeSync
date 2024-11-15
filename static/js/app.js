@@ -1,61 +1,92 @@
 document.addEventListener("DOMContentLoaded", () => {
     const button = document.getElementById("recommendButton");
+    const moodInput = document.getElementById('moodInput');
+    
     if (button) {
-        button.addEventListener("click", getRecommendations);
+        button.addEventListener("click", () => getRecommendations(moodInput.value));
     } else {
-        console.error("Button not found!");
+        console.error("Recommend button not found!");
     }
 });
 
-function getRecommendations() {
-    console.log("Button clicked!");  // Temporary test log to verify function is called
-    var mood = document.getElementById('moodInput').value;
-    var xhr = new XMLHttpRequest();
+function getRecommendations(mood) {
+    // Show loading indicator
+    showLoading(true);
+    
+    const xhr = new XMLHttpRequest();
     xhr.open('POST', '/get_recommendations', true);
 
     xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var response = JSON.parse(xhr.responseText);
-            var recommendationsList = document.getElementById('recommendationsList');
-            recommendationsList.innerHTML = '';
-
-            response.recommendations.forEach(function(song) {
-                var li = document.createElement('li');
-                
-                // Create elements for each attribute
-                var title = document.createElement('p');
-                title.textContent = "Title: " + song.song_title;
-                
-                var artist = document.createElement('p');
-                artist.textContent = "Artist: " + song.artist;
-                
-                var album = document.createElement('p');
-                album.textContent = "Album: " + song.album_name;
-                
-                var thumbnail = document.createElement('img');
-                thumbnail.src = song.thumbnail;
-                thumbnail.alt = "Album Cover";
-                thumbnail.style.width = "50px"; // Adjust thumbnail size if needed
-
-                var link = document.createElement('a');
-                link.href = song.uri;
-                link.textContent = "Listen on Spotify";
-                link.target = "_blank";  // Open link in a new tab
-
-                // Append all elements to the list item
-                li.appendChild(thumbnail);
-                li.appendChild(title);
-                li.appendChild(artist);
-                li.appendChild(album);
-                li.appendChild(link);
-
-                recommendationsList.appendChild(li);
-            });
+        if (xhr.readyState == 4) {
+            // Hide loading indicator
+            showLoading(false);
+            
+            if (xhr.status == 200) {
+                const response = JSON.parse(xhr.responseText);
+                displayRecommendations(response.recommendations);
+            } else {
+                console.error("Error fetching recommendations:", xhr.statusText);
+            }
         }
     };
 
-    var data = new FormData();
+    const data = new FormData();
     data.append('mood', mood);
     xhr.send(data);
 }
 
+function showLoading(isLoading) {
+    const recommendationsList = document.getElementById('recommendationsList');
+    recommendationsList.innerHTML = ''; // Clear previous recommendations
+    
+    if (isLoading) {
+        const loadingMessage = document.createElement('p');
+        loadingMessage.textContent = "Loading recommendations...";
+        loadingMessage.classList.add('loading');
+        recommendationsList.appendChild(loadingMessage);
+    }
+}
+
+function displayRecommendations(recommendations) {
+    const recommendationsList = document.getElementById('recommendationsList');
+    
+    if (recommendations.length === 0) {
+        recommendationsList.innerHTML = "<p>No recommendations found.</p>";
+        return;
+    }
+
+    recommendations.forEach(function(song) {
+        const li = document.createElement('li');
+        
+        // Create elements for each attribute
+        const title = document.createElement('p');
+        title.textContent = song.song_title;
+        title.classList.add('song-title');
+        
+        const artist = document.createElement('p');
+        artist.textContent = song.artist;
+        artist.classList.add('song-artist');
+        
+        const album = document.createElement('p');
+        album.textContent = song.album_name;
+        album.classList.add('song-album');
+        
+        const thumbnail = document.createElement('img');
+        thumbnail.src = song.thumbnail;
+        thumbnail.alt = "Album Cover";
+        thumbnail.classList.add('thumbnail'); // Add class for styling
+
+        // Make image clickable, opening the Spotify link
+        thumbnail.addEventListener('click', () => {
+            window.open(song.uri, '_blank');
+        });
+
+        // Append all elements to the list item
+        li.appendChild(thumbnail);
+        li.appendChild(title);
+        li.appendChild(artist);
+        li.appendChild(album);
+
+        recommendationsList.appendChild(li);
+    });
+}

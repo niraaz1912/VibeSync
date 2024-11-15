@@ -1,19 +1,28 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vibe Sync</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> <!-- Link to the CSS file -->
-    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>  <!-- Link to the external JS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>How are you feeling today?</h1>
-        <input type="text" id="moodInput" placeholder="Enter your mood" required>
-        <button id="recommendButton">Get Recommendations</button>
-
-        <h2>Recommended Songs:</h2>
-        <ul id="recommendationsList"></ul>  <!-- List of song recommendations -->
+        <div class="header">
+            <h1>How are you feeling today?</h1>
+            <p>Get personalized song recommendations based on your mood</p>
+        </div>
+        
+        <div class="input-section">
+            <input type="text" id="moodInput" placeholder="Enter your mood" required>
+            <button id="recommendButton">Get Recommendations</button>
+        </div>
+        
+        <div class="recommendations-section">
+            <ul id="recommendationsList"></ul>
+        </div>
     </div>
 </body>
 </html>
