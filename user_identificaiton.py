@@ -92,6 +92,7 @@ def get_recommendations(emotion):
     # Debugging: Print the retrieved data
    # print(f"Top Artists: {top_artists}")
     #print(f"Top Tracks: {top_tracks}")
+    #get_track_genres()
     #print(f"Recent Tracks: {recent_tracks}")
     #print(f"Selected Genres: {selected_genres}")
 
@@ -110,7 +111,7 @@ def get_recommendations(emotion):
         "seed_artists": top_artists_uris,  # Using URIs instead of just IDs
         #"seed_genres": selected_genres,
         "seed_tracks": top_tracks_uris,  # Using URIs instead of just IDs
-        "limit": 10
+        "limit": 15
     }
 
     
@@ -134,6 +135,77 @@ def get_recommendations(emotion):
         
 
     return tracks
+
+def get_recommendations_top_track_genre(emotion, genre_list):
+    # Validate emotion input
+    features = EMOTION_TO_FEATURES.get(emotion.lower())
+    if not features:
+        print(f"Emotion '{emotion}' not recognized.")
+        return []
+    
+    selected_genres = genre_list
+
+    # Configure recommendation parameters with user data
+    params = {
+        "seed_genres": selected_genres,
+        "limit": 15
+    }
+
+    
+    # Add audio feature filters based on the user's emotion
+    for feature, (min_val, max_val) in features.items():
+        params[f"min_{feature}"] = min_val
+        params[f"max_{feature}"] = max_val
+
+    # Fetch recommendations
+    try:
+        recommendations = sp.recommendations(**params)
+    except Exception as e:
+        print(f"Error fetching recommendations: {e}")
+        return []
+
+    # Return track names and artists
+    tracks = []
+    for track in recommendations['tracks']:
+        track_info = f"{track['name']} by {track['artists'][0]['name']}"
+        tracks.append(track_info)
+        
+
+    return tracks
+
+# Example function to get genres for top tracks
+def get_track_genres():
+    genres = []
+    
+    # Get user's top tracks (as IDs)
+    top_tracks = get_user_top_tracks(sp)
+    # Get user's recently played tracks (as IDs)
+    recent_tracks = get_recently_played_tracks(sp)
+    
+    # Determine whether to use top tracks or recent tracks (whichever is available)
+    if top_tracks:
+        tracks_to_process = top_tracks[:5]
+    else:
+        tracks_to_process = recent_tracks[:5]
+    
+    # Convert track IDs to URIs and fetch detailed track information
+    for track_id in tracks_to_process:
+        track_info = sp.track(track_id)  # Fetch detailed track info using the track ID
+        artist_id = track_info['artists'][0]['id']  # Get artist ID from track info
+        artist_info = sp.artist(artist_id)  # Fetch artist info using the artist ID
+        artist_genres = artist_info.get('genres', [])  # Get genres associated with the artist
+
+        # Append only the first genre for each track
+        if artist_genres:
+            genres.append(artist_genres[0])  # Take only the first genre
+    
+    for genre in genres:
+        print(genre)
+
+    return genres
+
+
+
 
 def get_recommendations_genre(emotion):
     # Validate emotion input
@@ -153,7 +225,7 @@ def get_recommendations_genre(emotion):
     # Configure recommendation parameters with user data
     params = {
         "seed_genres": selected_genres,
-        "limit": 10
+        "limit": 15
     }
 
     
@@ -178,13 +250,18 @@ def get_recommendations_genre(emotion):
 
     return tracks
 
+
 def recommend(emotion):
     tracks = get_recommendations(emotion)
     new_tracks = []
      
-    if (len(tracks)<10):
+    if (len(tracks)<15):
+        top_track_recommend = get_recommendations_top_track_genre(emotion, get_track_genres())
+        tracks.extend(new_tracks)
+
+    if (len(tracks)<25):
         new_tracks = get_recommendations_genre(emotion)
+        tracks.extend(new_tracks)
         
-    tracks.extend(new_tracks)
     return tracks
 

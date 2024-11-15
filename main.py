@@ -1,7 +1,7 @@
 from emotion_analyzer import predict_emotion
 from user_identificaiton import recommend
 
-text = "I am the happiest guy in the world."
+text = "I am the sad."
 
 emotion = predict_emotion(text)
 print(emotion)
