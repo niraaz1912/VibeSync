@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from emotion_analyzer import predict_emotion
 from user_identificaiton import recommend
 
@@ -13,7 +13,8 @@ def get_recs():
     text = request.form['mood']  # Get the user's mood from the form
     emotion = predict_emotion(text)  # Analyze the emotion
     tracks = recommend(emotion)
-    return render_template('recommendations.html', recommendations=tracks)
+    
+    return jsonify(recommendations=tracks)
 
 if __name__ == '__main__':
     app.run(debug=True)
