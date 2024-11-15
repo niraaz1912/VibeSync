@@ -123,7 +123,6 @@ def get_recommendations(emotion):
     # Fetch recommendations
     try:
         recommendations = sp.recommendations(**params)
-        print(recommendations)
     except Exception as e:
         print(f"Error fetching recommendations: {e}")
         return []
@@ -131,7 +130,13 @@ def get_recommendations(emotion):
     # Return track names and artists
     tracks = []
     for track in recommendations['tracks']:
-        track_info = f"{track['name']} by {track['artists'][0]['name']}"
+        #track_info = f"{track['name']} by {track['artists'][0]['name']}"
+        track_info = {}
+        track_info['song_title'] = track['name']
+        track_info['artist'] = track['artists'][0]['name']
+        track_info['uri'] = track['uri']
+        track_info['album_name'] = track['album']['name']
+        track_info['thumbnail'] = track['album']['images'][0]['url']
         tracks.append(track_info)
         
 
@@ -168,7 +173,13 @@ def get_recommendations_top_track_genre(emotion, genre_list):
     # Return track names and artists
     tracks = []
     for track in recommendations['tracks']:
-        track_info = f"{track['name']} by {track['artists'][0]['name']}"
+        #track_info = f"{track['name']} by {track['artists'][0]['name']}"
+        track_info = {}
+        track_info['song_title'] = track['name']
+        track_info['artist'] = track['artists'][0]['name']
+        track_info['uri'] = track['uri']
+        track_info['album_name'] = track['album']['name']
+        track_info['thumbnail'] = track['album']['images'][0]['url']
         tracks.append(track_info)
         
 
@@ -245,7 +256,13 @@ def get_recommendations_genre(emotion):
     # Return track names and artists
     tracks = []
     for track in recommendations['tracks']:
-        track_info = f"{track['name']} by {track['artists'][0]['name']}"
+         #track_info = f"{track['name']} by {track['artists'][0]['name']}"
+        track_info = {}
+        track_info['song_title'] = track['name']
+        track_info['artist'] = track['artists'][0]['name']
+        track_info['uri'] = track['uri']
+        track_info['album_name'] = track['album']['name']
+        track_info['thumbnail'] = track['album']['images'][0]['url']
         tracks.append(track_info)
         
 

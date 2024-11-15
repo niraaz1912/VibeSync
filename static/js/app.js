@@ -21,7 +21,34 @@ function getRecommendations() {
 
             response.recommendations.forEach(function(song) {
                 var li = document.createElement('li');
-                li.textContent = song;
+                
+                // Create elements for each attribute
+                var title = document.createElement('p');
+                title.textContent = "Title: " + song.song_title;
+                
+                var artist = document.createElement('p');
+                artist.textContent = "Artist: " + song.artist;
+                
+                var album = document.createElement('p');
+                album.textContent = "Album: " + song.album_name;
+                
+                var thumbnail = document.createElement('img');
+                thumbnail.src = song.thumbnail;
+                thumbnail.alt = "Album Cover";
+                thumbnail.style.width = "50px"; // Adjust thumbnail size if needed
+
+                var link = document.createElement('a');
+                link.href = song.uri;
+                link.textContent = "Listen on Spotify";
+                link.target = "_blank";  // Open link in a new tab
+
+                // Append all elements to the list item
+                li.appendChild(thumbnail);
+                li.appendChild(title);
+                li.appendChild(artist);
+                li.appendChild(album);
+                li.appendChild(link);
+
                 recommendationsList.appendChild(li);
             });
         }
@@ -31,3 +58,4 @@ function getRecommendations() {
     data.append('mood', mood);
     xhr.send(data);
 }
+
