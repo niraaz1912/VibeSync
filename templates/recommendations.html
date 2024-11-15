@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Song Recommendations</title>
+</head>
+<body>
+    <h1>Your Personalized Song Recommendations</h1>
+    <ul>
+        {% for song in recommendations %}
+            <li>{{ song }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
