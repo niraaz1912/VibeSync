@@ -3,8 +3,8 @@ from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 
 # Spotify client credentials
-CLIENT_ID = '0b5d6534910141f59ac2a47a3c6456fe'
-CLIENT_SECRET = 'da29b3217d9d4d04a0137b4e0481e18a'
+CLIENT_ID = '74235166cf144b109ec2ff3f20502bba'
+CLIENT_SECRET = '557cf7a1513d47fd82cf31834ca4043a'
 REDIRECT_URI = 'http://127.0.0.1:5500/'
 
 # Scopes for the app (these will allow us to access the user's recent tracks)

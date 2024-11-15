@@ -41,6 +41,13 @@ function fetchDefaultRecommendations() {
                 thumbnail.alt = "Album Cover";
                 thumbnail.className = 'thumbnail';
 
+                // Create play button with Font Awesome icon
+                var playButton = document.createElement('button');
+                playButton.className = 'play-button';
+                var playIcon = document.createElement('i');
+                playIcon.className = 'fas fa-play'; // Font Awesome play icon
+                playButton.appendChild(playIcon);
+
                 // Make the entire list item clickable to open Spotify link
                 li.addEventListener('click', function() {
                     window.open(song.uri, '_blank'); // Open Spotify link in a new tab
@@ -51,6 +58,7 @@ function fetchDefaultRecommendations() {
                 li.appendChild(title);
                 li.appendChild(artist);
                 li.appendChild(album);
+                li.appendChild(playButton);  // Append play button
 
                 recommendationsList.appendChild(li);
             });
@@ -94,6 +102,13 @@ function getRecommendations() {
                 thumbnail.alt = "Album Cover";
                 thumbnail.className = 'thumbnail';
 
+                // Create play button with Font Awesome icon
+                var playButton = document.createElement('button');
+                playButton.className = 'play-button';
+                var playIcon = document.createElement('i');
+                playIcon.className = 'fas fa-play'; // Font Awesome play icon
+                playButton.appendChild(playIcon);
+
                 // Make the entire list item clickable to open Spotify link
                 li.addEventListener('click', function() {
                     window.open(song.uri, '_blank'); // Open Spotify link in a new tab
@@ -104,6 +119,7 @@ function getRecommendations() {
                 li.appendChild(title);
                 li.appendChild(artist);
                 li.appendChild(album);
+                li.appendChild(playButton);  // Append play button
 
                 recommendationsList.appendChild(li);
             });

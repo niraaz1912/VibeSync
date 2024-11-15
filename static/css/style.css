@@ -119,6 +119,7 @@ button:hover {
     margin-top: 30px;
 }
 
+/* Styling for each song item */
 #recommendationsList li {
     display: flex;
     flex-direction: column;
@@ -129,6 +130,7 @@ button:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     opacity: 90%;
+    position: relative; /* This will allow absolute positioning of the play button */
 }
 
 /* Hover effect for each song item */
@@ -136,8 +138,45 @@ button:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
     opacity: 100%;
+    cursor: pointer;
 }
 
+#recommendationsList li:hover .song-album {
+    visibility: visible;
+}
+
+#recommendationsList li:hover .song-artist {
+    color: #027d0a;
+}
+
+/* Styling for the play button */
+.play-button {
+    display: none; /* Hide the play button by default */
+    font-size: 2rem; /* Adjust the size of the play button */
+    color: #027d0a;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute; /* Position the play button on top of the image */
+    bottom: 10px; /* Position it 10px from the bottom */
+    right: 10px; /* Position it 10px from the right */
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+/* Show the play button when hovering over the song item */
+#recommendationsList li:hover .play-button {
+    display: block;
+    opacity: 1;
+}
+.play-button:hover i {
+    color: white;  /* Change the play icon to white on hover */
+}
+/* Optional: Hover effect for the play button */
+.play-button:hover {
+    color: #015707;  /* Darker green on hover */
+}
+
+/* Styling for the image */
 #recommendationsList li img {
     width: 150px;
     height: 150px;
@@ -172,6 +211,7 @@ button:hover {
     font-size: 0.9rem;
     color: #777;
     margin-top: 5px;
+    visibility: hidden;
 }
 
 /* Loading message styling */
@@ -196,3 +236,4 @@ button:hover {
         width: 90%;
     }
 }
+
