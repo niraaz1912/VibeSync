@@ -2,15 +2,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Spotify Recommendation App</title>
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>  <!-- Link to the external JS file -->
+    <title>Vibe Sync</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> <!-- Link to the CSS file -->
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>  <!-- Link to the external JS file -->
 </head>
 <body>
-    <h1>How are you feeling today?</h1>
-    <input type="text" id="moodInput" placeholder="Enter your mood" required>
-    <button onclick="getRecommendations()">Get Recommendations</button>
+    <div class="container">
+        <h1>How are you feeling today?</h1>
+        <input type="text" id="moodInput" placeholder="Enter your mood" required>
+        <button id="recommendButton">Get Recommendations</button>
 
-    <h2>Recommended Songs:</h2>
-    <ul id="recommendationsList"></ul>  <!-- List of song recommendations -->
+        <h2>Recommended Songs:</h2>
+        <ul id="recommendationsList"></ul>  <!-- List of song recommendations -->
+    </div>
 </body>
 </html>

@@ -1,30 +1,33 @@
-// static/js/app.js
+document.addEventListener("DOMContentLoaded", () => {
+    const button = document.getElementById("recommendButton");
+    if (button) {
+        button.addEventListener("click", getRecommendations);
+    } else {
+        console.error("Button not found!");
+    }
+});
 
-// Function to send the user's mood and get the recommendations using XMLHttpRequest
 function getRecommendations() {
-    var mood = document.getElementById('moodInput').value;  // Get the mood from the input field
-    var xhr = new XMLHttpRequest();  // Create a new XMLHttpRequest object
-    xhr.open('POST', '/get_recommendations', true);  // Configure the request (POST to /get_recommendations)
+    console.log("Button clicked!");  // Temporary test log to verify function is called
+    var mood = document.getElementById('moodInput').value;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/get_recommendations', true);
 
-    // Set up the callback to handle the response
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            var response = JSON.parse(xhr.responseText);  // Parse the JSON response
-
+            var response = JSON.parse(xhr.responseText);
             var recommendationsList = document.getElementById('recommendationsList');
-            recommendationsList.innerHTML = '';  // Clear the previous recommendations
+            recommendationsList.innerHTML = '';
 
-            // Display the new recommendations
             response.recommendations.forEach(function(song) {
                 var li = document.createElement('li');
-                li.textContent = song;  // Add the song name to the list
+                li.textContent = song;
                 recommendationsList.appendChild(li);
             });
         }
     };
 
-    // Send the data (user mood) with the request
     var data = new FormData();
-    data.append('mood', mood);  // Add the mood to the form data
-    xhr.send(data);  // Send the request with the form data
+    data.append('mood', mood);
+    xhr.send(data);
 }
