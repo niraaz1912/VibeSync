@@ -18,7 +18,7 @@ function fetchDefaultRecommendations() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var response = JSON.parse(xhr.responseText);
             var recommendationsList = document.getElementById('recommendationsList');
-            recommendationsList.innerHTML = '';
+            recommendationsList.innerHTML = '';  // Clear the existing list
 
             response.recommendations.forEach(function(song) {
                 var li = document.createElement('li');
@@ -40,6 +40,11 @@ function fetchDefaultRecommendations() {
                 thumbnail.src = song.thumbnail;
                 thumbnail.alt = "Album Cover";
                 thumbnail.className = 'thumbnail';
+
+                // Make the entire list item clickable to open Spotify link
+                li.addEventListener('click', function() {
+                    window.open(song.uri, '_blank'); // Open Spotify link in a new tab
+                });
 
                 // Append all elements to the list item
                 li.appendChild(thumbnail);
@@ -53,12 +58,11 @@ function fetchDefaultRecommendations() {
     };
 
     var data = new FormData();
-    data.append('mood', 'default'); // You can change this to a default mood if needed
+    data.append('mood', 'default'); // Default mood or adjust as needed
     xhr.send(data);
 }
 
 function getRecommendations() {
-    console.log("Button clicked!");  // Temporary test log to verify function is called
     var mood = document.getElementById('moodInput').value;
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/get_recommendations', true);
@@ -67,7 +71,7 @@ function getRecommendations() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var response = JSON.parse(xhr.responseText);
             var recommendationsList = document.getElementById('recommendationsList');
-            recommendationsList.innerHTML = '';
+            recommendationsList.innerHTML = '';  // Clear the existing list
 
             response.recommendations.forEach(function(song) {
                 var li = document.createElement('li');
@@ -89,6 +93,11 @@ function getRecommendations() {
                 thumbnail.src = song.thumbnail;
                 thumbnail.alt = "Album Cover";
                 thumbnail.className = 'thumbnail';
+
+                // Make the entire list item clickable to open Spotify link
+                li.addEventListener('click', function() {
+                    window.open(song.uri, '_blank'); // Open Spotify link in a new tab
+                });
 
                 // Append all elements to the list item
                 li.appendChild(thumbnail);
