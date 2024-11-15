@@ -123,6 +123,7 @@ def get_recommendations(emotion):
     # Fetch recommendations
     try:
         recommendations = sp.recommendations(**params)
+        print(recommendations)
     except Exception as e:
         print(f"Error fetching recommendations: {e}")
         return []
