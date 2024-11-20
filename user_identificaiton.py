@@ -2,10 +2,17 @@ import random
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 
-# Spotify client credentials
-CLIENT_ID = '74235166cf144b109ec2ff3f20502bba'
-CLIENT_SECRET = '557cf7a1513d47fd82cf31834ca4043a'
-REDIRECT_URI = 'http://127.0.0.1:5500/'
+from dotenv import load_dotenv
+import os
+from spotipy import Spotify
+from spotipy.oauth2 import SpotifyOAuth
+
+# Load environment variables from .env
+load_dotenv()
+
+CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
+CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
+REDIRECT_URI = os.getenv('REDIRECT_URI')
 
 # Scopes for the app (these will allow us to access the user's recent tracks)
 scope = "user-library-read user-top-read user-read-recently-played playlist-read-private"

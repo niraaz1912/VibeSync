@@ -1,7 +1,7 @@
 .venv/
-requirements.txt
 playlist.js
 .cache
 _pycache_/
 __pycache__/
 *.pyc
+.env
