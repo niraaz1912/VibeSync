@@ -17,13 +17,12 @@
             <p>Get personalized song recommendations based on your mood</p>
         </div>
         
-        <div class="input-section">
-            <input type="text" id="moodInput" placeholder="How are you doing?" required>
+        <form class="input-section">
+            <input type="text" id="moodInput" placeholder="How are you doing?" required autofocus autocomplete="off">
             <button id="recommendButton">
                 <i class="fas fa-search"></i>
             </button>
-            
-        </div>
+        </form>
         
         <div class="recommendations-section">
             <ul id="recommendationsList"></ul>

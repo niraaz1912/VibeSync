@@ -4,8 +4,6 @@ from spotipy.oauth2 import SpotifyOAuth
 
 from dotenv import load_dotenv
 import os
-from spotipy import Spotify
-from spotipy.oauth2 import SpotifyOAuth
 
 # Load environment variables from .env
 load_dotenv()
