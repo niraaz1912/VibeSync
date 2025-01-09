@@ -1,8 +1,7 @@
 # VibeSync: A Spotify recommendation app
+![Screenshot 2024-07-22 090532](https://github.com/user-attachments/assets/a841ed4c-2017-449b-94c7-00c8df48260d)
 
-### Note: As of 
-
-## Descripion:
+## Description:
 The app combines advanced sentiment analysis with your Spotify listening habits to suggest the perfect songs for your mood and preferences.
 
 Here's how it works:
@@ -15,10 +14,10 @@ Here's how it works:
 
 ## Usage
 
-## Features
+### Features
 
 1. <B>Mood-Based Song Recommendations</B>
-    Analyze the user's input to determine their current mood or sentiment using advanced Natural Language Processing (NLP) techniques.
+    Analyze the user's input using advanced natural language processing (NLP) techniques to determine their current mood or sentiment.
 
 2. <B>Spotify Listening History Integration</B>
     Access the user's Spotify account to gather insights on favorite artists, most-played songs, and preferred genres.
@@ -37,5 +36,7 @@ Here's how it works:
 
 
 ### Contributors: 
-1. Niraaj Ojha [GitHub] ()
-2. Arshdeep padam [GitHub] (https://github.com/arshPadam)
+1. Niraaj Ojha [GitHub](https://github.com/niraaz1912)
+2. Arshdeep padam [GitHub](https://github.com/arshPadam)
+
+#### Note: Spotify unexpectedly announced [important changes](https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api) to their web API after the project was completed. This included the deprecation of the [get_recommendation](https://developer.spotify.com/documentation/web-api/reference/get-recommendations) function which our program heavily relies on.
